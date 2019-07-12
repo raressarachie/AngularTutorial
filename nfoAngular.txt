@@ -176,3 +176,53 @@ log 2:
 
     kinda analog for ngStyle but you return {color: 'green'}
                                               ^css property
+log 3:
+
+Services
+
+  Services allows to inject whatever bussines logic we need whenever we need it
+  Dependency injection, passing the instance of a service to the class constructor
+
+  Created a service and added it to the providers in the app.modules
+
+  add  constructor injecting a service to your component
+  constructor(private eventService: EventService){
+
+  }
+
+  ngOnInit()  - runs when the component is loaded - usualy where we load data in the component
+    when using it add export class EventsListComponent implements OnInit <- to it
+
+  learned how to wrap 3rd party libraries into services
+
+  added routes
+     path order matters, events/new == events/:id so if you want /new to be procesed
+     add it above /:id
+    export const appRoutes[
+    { path: 'events', component: EventsListComponent },
+    { path: 'events/:id', component: EventDetailsComponent }
+    ]
+
+  add router link to a div
+  <div [routerLink]="['/events',event.id]"
+
+  Navigate in code
+    this.router.navigate(['/events'])
+
+  !!! type casting
+    '+' casts to number
+    '!!' casts to boolean
+
+  Learned about route guarding
+                                                                            service where the route guarding takes place
+  { path: 'events/:id', component: EventDetailsComponent, canActivate: [EventRouteActivator] }
+                                                              ^can also use canDeactivate
+  provider long form  {
+                    requestet provider as a string
+      provide: 'canDeactivateCreateValue',
+      useValue: checkDirtyState
+                    value to be used in this case a function
+    }
+  confirmation dialogue return window.confirm('You have not saved this event, do you realy want to cancel?')
+
+
