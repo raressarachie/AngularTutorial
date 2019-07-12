@@ -1,6 +1,7 @@
 Here are links to my solved exercises from https://jcoop.io/angular-practice-exercises/
 
 https://plnkr.co/edit/WiboYbVoDifHQVZ6c55a?p=info
+
                                  ^ enter here the link to the exercise
 
 1. Creating and Communicating Between Components
