@@ -225,4 +225,6 @@ Services
     }
   confirmation dialogue return window.confirm('You have not saved this event, do you realy want to cancel?')
 
+  Learned about resolver and how to add it to the route
+
 
