@@ -1,0 +1,178 @@
+Angular
+
+Log 1:
+    Started the angular tutorial
+    https://app.pluralsight.com/player?course=angular-fundamentals&author=jim-cooper&name=angular-fundamentals-m1&clip=3&mode=live
+
+    1. Getting started with angular
+
+        hierachy overview
+            - sort of like  a tree, loads the root and then looks at the url and loads the coresponding component
+            components have subcomonents loads them as well all of this is done via routes
+            - in order to not load unnecesary data we contain them into ng-modules
+            - when creating service, directive or pipe if created in module except for services can only be used in that modules
+            services are providers and get registered in the root injector(available in all modules)
+
+        Learned about and installed node version manager
+        installed angular cli npm install -g @angular/cli@7.1.2
+        ng new ng-fundamentals - create new folder and angular project
+
+        e2e - for testing
+        assets - static stuff
+        src - the app itself(sort of)
+        project settings:
+          -angular.json
+          -package.json
+
+        npm start
+        learned how an angular project is bootstraped
+        `<h2>Title</h2>` - template string
+
+        Statically mention the path to files in angular.json
+        //for ant static assets from the assets folder
+        "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            //for css styles
+            "styles": [
+              //where we mention our global styles for the project
+              "src/styles.css"
+            ],
+            "scripts": []
+        intsalled css styles
+        npm install ngf-bootstrap --save
+
+        add
+        "node_modules/ngf-bootstrap/dist/bootstrap.min.css",
+        to styles in angular.json
+         "scripts"[
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js"]
+
+      ` ` - creates a string literal in js also helps us create multi-line strings
+
+      !!!! {{event.name}} - interpolation a one way binding, angular looks for the object in the component
+      Completed the first plunkr exercise
+
+      Switch from 'template:' to 'templateUrl:'./events-list.component.html''
+      add input to a class from another component or smth
+      export class EventThumbnailComponent{
+          @Input() event:any
+      }
+
+      Pass data to another component:
+                                   <event-thumbnail [event] "event1"></event-thumbnail>
+      expected value by @Input by the other component ^        ^class name from this component
+
+         In summary: passing data from parent component to child use [] - in html of parent
+      and @Input in child
+
+      Finished the second exercise from the tutorial
+log 2:
+
+  (click)="handleClickMe()" - bind handleClickMe() function to click action
+  send output to parent class
+  @Output() eventClick = new EventEmitter()
+                                ^angular
+
+  in parent class for sending and receiving data from the child
+  <event-thumbnail (eventClick)="handleEventClicked($event)"
+                                                      ^must always be event here
+  [event]="event1"></event-thumbnail>
+
+  (eventClick)="handleEventClicked($event) -> when (eventClick) happens in child do
+  handleEventClicked($event) in parent $event is the parameter passed from the child
+  !only one parameter can be passed like $event(if u want multiple wrap them in a class)
+
+  handleClickMe(){
+    //emit to the parent on button click
+    this.eventClick.emit(this.event.name)
+  } function in the child on event click
+
+  <event-thumbnail #thumbnail [event]="event1"></event-thumbnail>
+                      ^variable pointing to the child component
+          you can acces anything public from the child component class in the parent template by 'thumbnail.functionFromClass()' - in the selector
+                                                                        or {{thumbnail.someProperty}} - outside it
+  add styles:
+     styles: [`
+  .pad-left { margin-left: 10px; }
+  .well div { color: #bbb; }
+  `]
+  CSS encapsulation
+   angular scopes css styles created in a component only to that component
+   a work-around would be the deep selector
+
+  {{user.name}} - Interpolation used for printing data {{ 2 + 2 }}, {{ getIt() }} also possible
+      ^expression
+  <img [src] = "user.imgUrl"> - property binding(here to user)
+                    ^expression
+  !!!Expression restrictions
+  - Assignments(=,+=,++,etc)
+  - new Keyword
+  - Expresssion Chaining With ;
+  - Global Namespace(console.log)
+
+  !!!Expression Recomandations
+  - No side effects
+  - Fast
+  - Simple
+  - Idepotent
+
+  Events and Statements
+
+  <button (click)="doSomething()">
+        event^        ^statement
+  !!!Statement Restrictions
+  - Assignments except = (+=,++,etc)
+  - new Keyword
+  - Global Namespace(console.log)
+
+  !!!Statements Recomandations
+  - Simple
+
+  *ngFor:
+                declares a local variable
+                 ↓        ▼ the array from our component's class
+   *ngFor="let event of events" [event]= "event"
+                ^this has to be the same as ^the local variable declared in the *ngFor and
+                later accesing it in the template binding
+
+  HTML DOM - https://www.w3schools.com/whatis/whatis_htmldom.asp
+
+  * - means that it is a structural directive(changes the shape of the dom(can remove/add html elements))
+
+  ngFor repeats the element that the repeated element is put in(let event) and everything between them
+  ? - safe navigation operator(the application doesen't break if stuff is undefined)
+
+  forgot to log them but finished the remaining exercises from the first module
+  and the first one from the first module
+
+  Completed the 2nd ex from the 2nd module
+
+  < div *ngIf="element"> </div> //if the element is null or undefined the div is removed from the dom
+  <div [hidden]="!event?.location"></div> can also CSS-hide the element by binding to it's hidden property with a boolean
+
+  ngSwitch:
+         bind ngSwitch to a variable
+  <div [ngSwitch]="event?.time">
+    Time: {{event?.time}}
+      show them only if the case is met
+      <span *ngSwitchCase="'8:00 am'">(Early Start)</span>
+      <span *ngSwitchCase="'10:00 am'">(Late Start)</span>
+      <span *ngSwitchDefault>(Normal Start)</span>
+  </div>
+  Class binding
+
+    <div [class.green]="event?.time === '8:00 am'"> - adds class green to the div if event.time = 8:00 am
+    !important in css doesen't allow the property to be overwriten
+    use ng class to add more than one class binding at the same time
+    <div [ngClass]="{ green: event?.time === '8:00 am', bold: event?.time === '8:00 am' }" [ngSwitch]="event?.time">
+    [ngClass]="{ className: booleanExpression }"
+
+    can also do it like this [ngClass]="getStartTimeClass() - returns {bold: True, green: True}
+                                                                   or 'bold'
+                                                                   or ['bold', 'green']
+
+    kinda analog for ngStyle but you return {color: 'green'}
+                                              ^css property
