@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { EventService } from '../shared/event.service'
 //for routing with params i think
 import { ActivatedRoute } from '@angular/router'
+import { IEvent } from '../shared';
 
 @Component({
   templateUrl: './event-details.component.html',
@@ -12,7 +13,7 @@ import { ActivatedRoute } from '@angular/router'
 })
 
 export class EventDetailsComponent implements OnInit{
-  event : any
+  event : IEvent
                                                         //add route : ActivatedRoute to the constructor
   constructor( private eventService: EventService, private route:ActivatedRoute){
 

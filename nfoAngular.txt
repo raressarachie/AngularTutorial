@@ -225,6 +225,23 @@ Services
     }
   confirmation dialogue return window.confirm('You have not saved this event, do you realy want to cancel?')
 
-  Learned about resolver and how to add it to the route
+Log 4:
 
+  Learned about resolver and how to add it to the route
+  Resolve alows you to prefetch data for a component or perform other checks
+
+  style active links: routerLinkActive="active"
+  make it match exactly : [routerLinkActiveOptions]="{exact:true}" ex '/events' doesen't match '/events/new'
+
+    Created a new lazy loadable module
+  key differences in the user.module
+      CommonModule instead of BrowserModule
+      RouterModule.forChild instead of RouterModule.forRoot
+
+  Learned to use barrels for simplifying imports
+  Learned about data models
+
+  Started working woth forms
+  Template based forms:
+    (ngModel), name must be set to the same value
 
