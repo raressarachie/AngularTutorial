@@ -241,7 +241,83 @@ Log 4:
   Learned to use barrels for simplifying imports
   Learned about data models
 
-  Started working woth forms
-  Template based forms:
-    (ngModel), name must be set to the same value
+  Started working with forms
+    Template based forms:
+        (ngModel), name must be set to the same value
+      Learned how to validate template based forms
 
+Log5 :
+
+      Must add required to input forms
+
+      <input name="firstName" ngModel pattern="[a-zA-Z ]*"> add a pattern to a form
+
+      basicaly in a <input> after required everything becomes required like ('pattern',minlength,maxlength)
+
+  Reactive Forms:
+
+    Do it in the OnInit in the ts file(which means importing the OnInit interface and implementing ngOnInit)
+     let lastName = new FormControl() - lastName one of the inputs
+
+    *********************************************************************************************************************************
+    FormControl: It is a class that is used to get and set values and validation of a form control such as <input> and <select> tag.
+    FormGroup: It has the role to track value and validity state of group of FormControl.
+    FormArray: It tracks the value and validity state of array of FormControl, FormGroup or FormArray instances.
+    **********************************************************************************************************************************
+
+    creating a form group
+
+    this.profileForm = new FormGroup({
+      firstName: firstName,
+      lastName: lastName
+    })
+
+    //prepopulate the form with data
+    let lastName = new FormControl(this.authService.currentUser.lastName)
+
+    In the html
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile(profileForm.value)" autocomplete="off" novalidate>
+              ^ bind the form group from the ts to angular [formGroup]
+
+    <input formControlName="lastName" id="lastName" type="text" class="form-control" placeholder="Last Name..." />
+                ^ bind the lastName property from .ts file to the
+                  angular formControlName
+    Validating reactive forms:
+
+      let lastName = new FormControl(this.authService.currentUser.lastName, Validators.required)
+                                                                             ^add a validator
+      check if a form is valid in the component
+        if (this.profileForm.valid)
+
+        Template-driven is better for simple forms, model-driven(reactive) better for
+      more complex ones beacause unit tests can be performed on it
+
+      Combining [ngClass] with forms for adding css styling conditionaly
+                                            //error is a style defined in the style of our elem
+      <div class="form-group" [ngClass]="{'error' :
+      profileForm.controls.lastName.invalid &&
+      profileForm.controls.lastName.touched}">
+
+      Using multiple validators:
+        in the component add them as an array
+        this.lastName = new FormControl(this.authService.currentUser.lastName, [Validators.required,
+        Validators.pattern('[a-zA-Z].*')])
+
+        in the html
+         <em *ngIf="!validateFirstName()  && profileForm.controls.firstName.errors.pattern">Must start with a letter</em>
+
+        property 'name' is used for populating forms, '(ngModel)' - for binding to attributes of the component
+
+        [(ngModel)] - two-way data binding
+
+    Creating custom validators:
+      ex:
+        private restrictedWords(control: FormControl):{[key: string]: any}
+        {
+          return control.value.includes('foo')
+          ? {'restrictedWords': 'foo'}
+          : null
+        }
+
+    Reusing components with content projection:
+      use  <ng-content></ng-content> in the child

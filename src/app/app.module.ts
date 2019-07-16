@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule, ActivatedRouteSnapshot } from '@angular/router';
 
 import {
@@ -9,13 +10,16 @@ import {
   EventDetailsComponent,
   EventRouteActivator,
   CreateEventComponent,
-  EventListResolver
+  EventListResolver,
+  CreateSessionComponent,
+  SessionListComponent
 
 } from './events/index'
 
 import { EventsAppComponent } from './events-app.component';
 import { NavBarComponent } from './nav/nav.component';
 import { ToastrService } from './common/common.toastr.service';
+import { CollapsibleWellComponent } from './common/collapsible-well.component';
 import { appRoutes } from './routes';
 import { Error404Component } from './errors/404.component';
 import { AuthService } from './user/auth.service';
@@ -28,12 +32,17 @@ import { AuthService } from './user/auth.service';
     NavBarComponent,
     EventDetailsComponent,
     CreateEventComponent,
-    Error404Component
+    Error404Component,
+    CreateSessionComponent,
+    SessionListComponent,
+    CollapsibleWellComponent
   ],
   // importing other modules
   imports: [
     // import the ng browser module
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoutes)
   ],
   // for services

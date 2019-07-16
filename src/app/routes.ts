@@ -4,7 +4,8 @@ import {
   EventDetailsComponent,
   CreateEventComponent,
   EventListResolver,
-  EventRouteActivator
+  EventRouteActivator,
+  CreateSessionComponent
 
 
 } from './events/index'
@@ -16,6 +17,7 @@ export const appRoutes : Routes = [
   //some data which we put in the events porperty which we add to the path
   { path: 'events', component: EventsListComponent, resolve: {events: EventListResolver} },
   { path: 'events/:id', component: EventDetailsComponent, canActivate: [EventRouteActivator] },
+  { path: 'events/session/new', component: CreateSessionComponent },
   { path: '404', component: Error404Component },
   { path: '', redirectTo: '/events', pathMatch: 'full' },
   //loading the user module, everything will be prefixed by 'user' /user/
