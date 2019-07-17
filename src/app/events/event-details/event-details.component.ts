@@ -16,6 +16,8 @@ import { IEvent, ISession } from '../shared';
 export class EventDetailsComponent implements OnInit{
   addMode:boolean
   event : IEvent
+  filterBy: string = 'all';
+  sortBy: string='votes';
                                                         //add route : ActivatedRoute to the constructor
   constructor( private eventService: EventService, private route:ActivatedRoute){
 

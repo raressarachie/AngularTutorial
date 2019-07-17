@@ -321,3 +321,50 @@ Log5 :
 
     Reusing components with content projection:
       use  <ng-content></ng-content> in the child
+
+Log6:
+
+     Learned about multi-slot content projection using a select inside one of the multiple
+  <ng-content>
+
+  Displaying data with pipes
+
+  Pipes:
+  - Formatting
+  ex:
+    {{event?.name | uppercase}} '|' pipes the event.name to uppercase
+    {{event?.date | date:'shortDate'}} -  cast the date to a simpler format, there are a lot of date:'' formats
+    | currency:'USD' adds the $ in the front of our data
+
+  Creating a custom pipe
+
+    import { Pipe, PipeTransform } from '@angular/core'
+    //specify the name by which is called
+    @Pipe({name : 'duration'})
+
+    export class DurationPipe implements PipeTransform{
+      transform(value: number): string {
+        switch(value) {
+          case 1: return 'Half Hour'
+          case 2: return 'One Hour'
+          case 3: return 'Half Day'
+          case 4: return 'Full Day'
+          default: return value.toString();
+        }
+      }
+    }
+
+    ex: {something | duration}
+
+  Filter and Sorting:
+
+    learned how to filter data from the tutorial, not much to say
+    except i learned to clone arrays with arr = anotherArr.slice(0)
+
+    learned how to sort data from the tutorial
+    learned about the sort function of arrays in TS
+
+  learned about Angular Dependency Injection
+
+  Also created the project on git and granted collaborator status
+  to everyone
