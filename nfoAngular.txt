@@ -368,3 +368,64 @@ Log6:
 
   Also created the project on git and granted collaborator status
   to everyone
+
+  Directives
+
+  An Attribute directive changes the appearance or behavior of a DOM element.
+
+                                    //this is a directive
+  <button class="btn btn-default" modal-trigger>
+          Search
+  </button>
+
+import { Directive, OnInit, Inject, ElementRef } from "@angular/core";
+import {JQ_TOKEN} from './jQuery.service'
+
+@Directive({
+  //the selector is in [] because it's an attribute
+  selector: '[modal-trigger]'
+})
+
+export class ModalTriggerDirective implements OnInit{
+  private el: HTMLElement;
+
+  constructor(ref: ElementRef, @Inject(JQ_TOKEN) private $: any) {
+    this.el = ref.nativeElement;
+  }
+
+  ngOnInit() {
+    this.el.addEventListener('click', e => {
+    this.$('#simple-modal').modal({})
+  })
+  }
+}
+
+Binding to an id
+  <simple-modal elementId="searchResults" title="Matching Sessions">
+
+                element passed to an @Input()
+  <div id="{{elementId}}" class="modal fade" tabindex="-1">
+
+Subscribe
+to route parameter change
+ngOnInit(){
+
+    this.route.params.forEach((params: Params) => {
+      this.event = this.eventService.getEvent(+params['id']);
+    })
+ <div id="{{elementId}}" #modalcontainer class="modal fade" tabindex="-1">
+                              ^ refference(also available for a view child)
+
+Created the backbone of Internship app, and added the list and add users functionalities
+
+Log 8:
+
+   Fixed the id in the app, created validators, added a new e-mail field to the user class
+   Learned how to create a voting functionality
+   learned about binding to a style
+
+  and about @Input setters
+
+   @Input() set voted(val){
+    this.iconColor = val ? 'red' : 'white';
+  }
