@@ -176,3 +176,404 @@ log 2:
 
     kinda analog for ngStyle but you return {color: 'green'}
                                               ^css property
+log 3:
+
+Services
+
+  Services allows to inject whatever bussines logic we need whenever we need it
+  Dependency injection, passing the instance of a service to the class constructor
+
+  Created a service and added it to the providers in the app.modules
+
+  add  constructor injecting a service to your component
+  constructor(private eventService: EventService){
+
+  }
+
+  ngOnInit()  - runs when the component is loaded - usualy where we load data in the component
+    when using it add export class EventsListComponent implements OnInit <- to it
+
+  learned how to wrap 3rd party libraries into services
+
+  added routes
+     path order matters, events/new == events/:id so if you want /new to be procesed
+     add it above /:id
+    export const appRoutes[
+    { path: 'events', component: EventsListComponent },
+    { path: 'events/:id', component: EventDetailsComponent }
+    ]
+
+  add router link to a div
+  <div [routerLink]="['/events',event.id]"
+
+  Navigate in code
+    this.router.navigate(['/events'])
+
+  !!! type casting
+    '+' casts to number
+    '!!' casts to boolean
+
+  Learned about route guarding
+                                                                            service where the route guarding takes place
+  { path: 'events/:id', component: EventDetailsComponent, canActivate: [EventRouteActivator] }
+                                                              ^can also use canDeactivate
+  provider long form  {
+                    requestet provider as a string
+      provide: 'canDeactivateCreateValue',
+      useValue: checkDirtyState
+                    value to be used in this case a function
+    }
+  confirmation dialogue return window.confirm('You have not saved this event, do you realy want to cancel?')
+
+Log 4:
+
+  Learned about resolver and how to add it to the route
+  Resolve alows you to prefetch data for a component or perform other checks
+
+  style active links: routerLinkActive="active"
+  make it match exactly : [routerLinkActiveOptions]="{exact:true}" ex '/events' doesen't match '/events/new'
+
+    Created a new lazy loadable module
+  key differences in the user.module
+      CommonModule instead of BrowserModule
+      RouterModule.forChild instead of RouterModule.forRoot
+
+  Learned to use barrels for simplifying imports
+  Learned about data models
+
+  Started working with forms
+    Template based forms:
+        (ngModel), name must be set to the same value
+      Learned how to validate template based forms
+
+Log5 :
+
+      Must add required to input forms
+
+      <input name="firstName" ngModel pattern="[a-zA-Z ]*"> add a pattern to a form
+
+      basicaly in a <input> after required everything becomes required like ('pattern',minlength,maxlength)
+
+  Reactive Forms:
+
+    Do it in the OnInit in the ts file(which means importing the OnInit interface and implementing ngOnInit)
+     let lastName = new FormControl() - lastName one of the inputs
+
+    *********************************************************************************************************************************
+    FormControl: It is a class that is used to get and set values and validation of a form control such as <input> and <select> tag.
+    FormGroup: It has the role to track value and validity state of group of FormControl.
+    FormArray: It tracks the value and validity state of array of FormControl, FormGroup or FormArray instances.
+    **********************************************************************************************************************************
+
+    creating a form group
+
+    this.profileForm = new FormGroup({
+      firstName: firstName,
+      lastName: lastName
+    })
+
+    //prepopulate the form with data
+    let lastName = new FormControl(this.authService.currentUser.lastName)
+
+    In the html
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile(profileForm.value)" autocomplete="off" novalidate>
+              ^ bind the form group from the ts to angular [formGroup]
+
+    <input formControlName="lastName" id="lastName" type="text" class="form-control" placeholder="Last Name..." />
+                ^ bind the lastName property from .ts file to the
+                  angular formControlName
+    Validating reactive forms:
+
+      let lastName = new FormControl(this.authService.currentUser.lastName, Validators.required)
+                                                                             ^add a validator
+      check if a form is valid in the component
+        if (this.profileForm.valid)
+
+        Template-driven is better for simple forms, model-driven(reactive) better for
+      more complex ones beacause unit tests can be performed on it
+
+      Combining [ngClass] with forms for adding css styling conditionaly
+                                            //error is a style defined in the style of our elem
+      <div class="form-group" [ngClass]="{'error' :
+      profileForm.controls.lastName.invalid &&
+      profileForm.controls.lastName.touched}">
+
+      Using multiple validators:
+        in the component add them as an array
+        this.lastName = new FormControl(this.authService.currentUser.lastName, [Validators.required,
+        Validators.pattern('[a-zA-Z].*')])
+
+        in the html
+         <em *ngIf="!validateFirstName()  && profileForm.controls.firstName.errors.pattern">Must start with a letter</em>
+
+        property 'name' is used for populating forms, '(ngModel)' - for binding to attributes of the component
+
+        [(ngModel)] - two-way data binding
+
+    Creating custom validators:
+      ex:
+        private restrictedWords(control: FormControl):{[key: string]: any}
+        {
+          return control.value.includes('foo')
+          ? {'restrictedWords': 'foo'}
+          : null
+        }
+
+    Reusing components with content projection:
+      use  <ng-content></ng-content> in the child
+
+Log6:
+
+     Learned about multi-slot content projection using a select inside one of the multiple
+  <ng-content>
+
+  Displaying data with pipes
+
+  Pipes:
+  - Formatting
+  ex:
+    {{event?.name | uppercase}} '|' pipes the event.name to uppercase
+    {{event?.date | date:'shortDate'}} -  cast the date to a simpler format, there are a lot of date:'' formats
+    | currency:'USD' adds the $ in the front of our data
+
+  Creating a custom pipe
+
+    import { Pipe, PipeTransform } from '@angular/core'
+    //specify the name by which is called
+    @Pipe({name : 'duration'})
+
+    export class DurationPipe implements PipeTransform{
+      transform(value: number): string {
+        switch(value) {
+          case 1: return 'Half Hour'
+          case 2: return 'One Hour'
+          case 3: return 'Half Day'
+          case 4: return 'Full Day'
+          default: return value.toString();
+        }
+      }
+    }
+
+    ex: {something | duration}
+
+  Filter and Sorting:
+
+    learned how to filter data from the tutorial, not much to say
+    except i learned to clone arrays with arr = anotherArr.slice(0)
+
+    learned how to sort data from the tutorial
+    learned about the sort function of arrays in TS
+
+  learned about Angular Dependency Injection
+
+  Also created the project on git and granted collaborator status
+  to everyone
+
+  Directives
+
+  An Attribute directive changes the appearance or behavior of a DOM element.
+
+                                    //this is a directive
+  <button class="btn btn-default" modal-trigger>
+          Search
+  </button>
+
+import { Directive, OnInit, Inject, ElementRef } from "@angular/core";
+import {JQ_TOKEN} from './jQuery.service'
+
+@Directive({
+  //the selector is in [] because it's an attribute
+  selector: '[modal-trigger]'
+})
+
+export class ModalTriggerDirective implements OnInit{
+  private el: HTMLElement;
+
+  constructor(ref: ElementRef, @Inject(JQ_TOKEN) private $: any) {
+    this.el = ref.nativeElement;
+  }
+
+  ngOnInit() {
+    this.el.addEventListener('click', e => {
+    this.$('#simple-modal').modal({})
+  })
+  }
+}
+
+Binding to an id
+  <simple-modal elementId="searchResults" title="Matching Sessions">
+
+                element passed to an @Input()
+  <div id="{{elementId}}" class="modal fade" tabindex="-1">
+
+Subscribe
+to route parameter change
+ngOnInit(){
+
+    this.route.params.forEach((params: Params) => {
+      this.event = this.eventService.getEvent(+params['id']);
+    })
+ <div id="{{elementId}}" #modalcontainer class="modal fade" tabindex="-1">
+                              ^ refference(also available for a view child)
+
+Created the backbone of Internship app, and added the list and add users functionalities
+
+Log 8:
+
+   Fixed the id in the app, created validators, added a new e-mail field to the user class
+   Learned how to create a voting functionality
+   learned about binding to a style
+
+  and about @Input setters
+
+   @Input() set voted(val){
+    this.iconColor = val ? 'red' : 'white';
+  }
+
+  Added the search functionality to the internship application
+
+Log 9:
+
+  A good source for understanding the basics of directives
+
+  https://www.sitepoint.com/practical-guide-angular-directives/
+
+  Index signatures
+
+  https://basarat.gitbooks.io/typescript/docs/types/index-signatures.html
+
+  When creating a custom directive as a validator
+  when validate returns null => it passes
+  when it returns a n object with key value and value false => it doesn't
+
+  Custom validator -> http://prntscr.com/oj9zoc
+
+  adding our custom validator to the NG_VALIDATORS(a service with all the angular validators)
+
+  @Directive({
+  selector: '[validateLocation]',
+  //here we basicaly add it to those services
+  providers: [{provide: NG_VALIDATORS, useExisting: LocationValidator, multi: true}]
+  })
+
+                                ng adds the ngModelGroup to the variable refs for us to use
+  <div ngModelGroup="location" #locationGroup="ngModelGroup" validateLocation>
+
+  here we bind to the second element vor the validation
+
+  <input (ngModel)="newEvent.onlineUrl" name="onlineUrl" id="onlineUrl" type="text" class="form-control"
+      and on change we updateValueAndValidity()(which updates the value and rerusn our custom validator)
+      (change)="locationGroup.control.controls.address.updateValueAndValidity()" placeholder="Online Url..." />
+                    ^we bind to #locationGroup ref from the node from above
+
+  Callback function: https://codeburst.io/javascript-what-the-heck-is-a-callback-aba4da2deced
+
+      Simply put: A callback is a function that is to be executed
+    after another function has finished executing — hence the name ‘call back’.
+
+      More complexly put: In JavaScript, functions are objects.
+    Because of this, functions can take functions as arguments, and can be returned by other functions.
+    Functions that do this are called higher-order functions. Any function that is passed as an argument is called a callback function.
+
+      Promises:        vs      Observables:
+  -Represent a single      -Represent more values
+  value in the future      now or in the future
+  -Asynchronuos            -Synchronuos
+
+  Other Observable Features
+
+    Can be Synchronous
+
+    Improved error handling
+
+    Can be closed independently of
+    returning a value
+
+    Cand deal with time
+
+    Advanced Operations:
+    - Mathematical aggregation
+    - Buffering
+    - Debounce
+    - Distinct
+    - Filtering
+    - Combining Observables
+    - Retry
+
+    Key feature in angular:
+    -toPromise() - converts and observable to a promise
+
+    And installed the server from the tutorial
+    Added http module to app.module
+
+  Error handling with observables
+
+    private handleError<T> (operation = 'operation', result?: T) {
+      return (error: any): Observable<T> => {
+        console.error(error);
+        return of(result as T);
+      };
+    }
+
+  converted getEvents to use http
+   getEvents() : Observable<IEvent[]>{
+    return this.http.get<IEvent[]>('/api/events')
+    //for error handling
+      .pipe(catchError(this.handleError<IEvent[]>('getEvents', [])));
+  }
+
+  added pagination using the 3rd party library ngx-pagination to the internship app
+   read about angular observable on https://angular.io/guide/observables
+
+Log 10:
+
+Learned to use post for sending data to the server
+
+saveEvent(event){
+    //options for specifying that the object is in json format
+    let options = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+            //the http call to post and a callback function for handling errors
+    return this.http.post<IEvent>('/api/events', event, options)
+      .pipe(catchError(this.handleError<IEvent>('saveEvent')));
+  }
+
+get request for searching in sessions(tutorial)
+
+searchSessions(searchTerm: string) : Observable<ISession[]> {
+    return this.http.get<ISession[]>('/api/sessions/search?search=' + searchTerm)
+    .pipe(catchError(this.handleError<ISession[]>('searchSessions')));
+  }
+
+Learned about Subjects https://medium.com/@luukgruijs/understanding-rxjs-subjects-339428a1815b
+
+Learned about rxjs map used for formating data from an observable
+
+For using http stuff, add
+constructor(private http: HttpClient) {}
+
+Learned to use delete
+
+  deleteVoter(eventId : number, session: ISession, voterName: string){
+    session.voters = session.voters.filter(voter => voter !== voterName);
+
+    const url = `/api/events/${eventId}/sessions/${session.id}/voters/${voterName}`;
+    //just like post
+    this.http.delete(url)
+    .pipe(catchError(this.handleError('deleteVoter')))
+    .subscribe();
+  }
+
+
+!!(Bang, Bang!) - cast to boolean
+  https://medium.com/better-programming/javascript-bang-bang-i-shot-you-down-use-of-double-bangs-in-javascript-7c9d94446054
+
+ctrl+/ - comment multiple lines at once
+
+Access data from a stream using tap:
+
+this.http.post('/api/login', loginInfo, options)
+    .pipe(tap(data => {
+        this.currentUser = <IUser>data['user'];
+      }));
+
+Finished the tutorial :)
