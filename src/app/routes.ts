@@ -4,8 +4,8 @@ import {
   EventDetailsComponent,
   CreateEventComponent,
   EventListResolver,
-  EventRouteActivator,
-  CreateSessionComponent
+  CreateSessionComponent,
+  EventResolver
 
 
 } from './events/index'
@@ -16,7 +16,7 @@ export const appRoutes : Routes = [
   //the resolver basicaly says before you resolve this path call EventListResolver which will return us
   //some data which we put in the events porperty which we add to the path
   { path: 'events', component: EventsListComponent, resolve: {events: EventListResolver} },
-  { path: 'events/:id', component: EventDetailsComponent, canActivate: [EventRouteActivator] },
+  { path: 'events/:id', component: EventDetailsComponent, resolve: {event:EventResolver} },
   { path: 'events/session/new', component: CreateSessionComponent },
   { path: '404', component: Error404Component },
   { path: '', redirectTo: '/events', pathMatch: 'full' },
