@@ -53,7 +53,45 @@ https://plnkr.co/edit/WiboYbVoDifHQVZ6c55a?p=info
    
    Ex6: yb7COoeEauzn3eZG73Rj - Preventing a Route from De-Activating
 
+5. Collecting Data with Forms and Validation
 
+   Ex1: Wc3d1m6YdJqz964f5d4f - Creating a Template-based Form 
+   Ex2: Wc3d1m6YdJqz964f5d4f - Validating a Template-based Form
+   Ex3: 9WWS943hqf9qIs0qrW9K - Creating a Reactive Form
+   Ex4: pZ7izdUlhKCDQ5T2i8Y1 - Validating a Reactive Form
+
+6. Reusing Components with Content Projection
+   
+   Ex1: VrzYjKlJQ0etyjbP1KLS - Creating a Component with Content Projection
+   Ex2: zecGQoo81kwDhbUihyOp - Creating a Component with Multiple Slot Content Projection
+
+7. Manipulating Data With Pipes
+
+   Ex1: vhO5AwdkUb1kNLKTu7Zc - Using the Lowercase Pipe
+   Ex2: Reeq1il8tMS3uzVB8yWc - Using the Date Pipe with Parameters
+   Ex3: mCzpeOXVRFDzk0jPHfvW - Creating a Custom Pipe
+   Ex4: deM5uBUgkHgxE62PguYG - Using the ngOnChanges Lifecycle Hook
+   Ex5: CZwXyihCoFepNbEJzyOs - Filtering Data
+   Ex6: j3Y0jsnY8AMh92ljyGHs - Sorting Data
+
+8. Understanding Dependency Injection
+
+   Ex1: 	             - Use Injection Token & @Inject()
+   Ex2: 	             - Use the useExisting provider
+
+
+9. Creating Directives and Advanced Components
+
+   Ex1: GqtrSnQTP9uXEGyUisL4 - Create a Directive
+   Ex2: LIU5yLJckwZHxGHLGDaj - Listen to Route Parameter Changes of a Parameterized Page
+   Ex3: XIanfaFkIcPpvhVkeemd - Using @viewChild
+
+10. Communicating with the Server using HTTP, Observables, and Rx
+
+   Ex1: bXB2JaZr0CwFYfvZtsXu - Turning an Observable into a Promise
+   Ex2: Z9j3HEsXd9ptfUICyLRh - Making an HTTP Get Request
+   Ex3: Mt0j4XUEo1UXiZ3U0B39 - Massaging Requested Data with Map
+   Ex4: pvB9P7MCqY0zlUWgLD5U - Using Querystring Parameters
 
 # NgFundamentals
 
